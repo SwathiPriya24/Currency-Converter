@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+       * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height: 100vh;
+    width: 100%;
+    background-color: #f0f0f0;
+    background-image: url(./Images/currencyy.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.outer {
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgb(0, 0, 0);
+    text-align: center;
+    margin-top: 35px;
+    margin-left: 20px;
+}
+
+h1 {
+    color: #005eff;
+    margin-bottom: 50px;
+}
+
+input[type="number"], select {
+    height: 40px;
+    width: 100%;
+    margin-bottom: 40px;
+    padding: 0 10px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+input[type="text"] {
+    height: 40px;
+    width: 100%;
+    margin-bottom: 50px;
+    padding: 0 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    height: 40px;
+    width: 100px;
+    background-color: #cbdaf3;
+    border: none;
+    color: #005eff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ffffff;
+    color:#2765d0 ;
+    border-radius: 50px !important;
+}
+
+@media (max-width: 600px) {
+    input[type="number"], select {
+        width: 100%;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <h1>Currency Converter</h1>
+
+        <input type="text" name="" id="fromConvert" placeholder="Enter amount">
+        <select name="" id="fromSelect">
+            <option value="">Select Country</option>
+            <option value="usd">USD</option>
+            <option value="bhd">BHD</option>
+            <option value="inr">INR</option>
+            <option value="uae">UAE</option>
+        </select>
+
+        <select name="" id="toSelect">
+            <option value="">Select Country</option>
+            <option value="usd">USD</option>
+            <option value="bhd">BHD</option>
+            <option value="inr">INR</option>
+            <option value="uae">UAE</option>
+        </select>
+        <input type="text" name="" id="toConvert" readonly>
+        <button id="btn" onclick="convert()"><b>Convert</b></button>
+
+    </div>
+
+    <script>
+        function convert() {
+            let fromConvert = parseFloat(document.getElementById('fromConvert').value);
+            let fromSelect = document.getElementById('fromSelect').value;
+            let toSelect = document.getElementById('toSelect').value;
+            let toConvert = document.getElementById('toConvert');
+
+            if (fromSelect === toSelect) {
+                toConvert.value = fromConvert;
+                return;
+            }
+
+            // Conversion rates (for demonstration purposes; use accurate rates)
+            const conversionRates = {
+                usd: {
+                    inr: 82,
+                    bhd: 0.38,
+                    uae: 3.67
+                },
+                bhd: {
+                    usd: 2.65,
+                    inr: 220,
+                    uae: 9.75
+                },
+                inr: {
+                    usd: 0.01,
+                    bhd: 0.0045,
+                    uae: 0.04
+                },
+                uae: {
+                    usd: 0.27,
+                    bhd: 0.10,
+                    inr: 22.58
+                }
+            };
+
+            // Perform conversion
+            if (fromSelect && toSelect && conversionRates[fromSelect] && conversionRates[fromSelect][toSelect]) {
+                let conversionRate = conversionRates[fromSelect][toSelect];
+                let result = fromConvert * conversionRate;
+                toConvert.value = result.toFixed(2); // Adjust to the required decimal places
+            } else {
+                alert('Invalid conversion!');
+            }
+        }
+    </script>
+</body>
+
+</html>
